@@ -1,0 +1,47 @@
+version: '3.0'
+
+services:
+  storage:
+    container_name: postgres
+    image: postgres:12.4
+    volumes:
+      - stor_vol:/var/lib/postgresql/data
+    env_file:
+      docker/prod.env
+    ports:
+      - 5432:5432
+
+  queue:
+    build: docker/rabbitmq
+    container_name: rabbitmq
+    image: rss_rabbitmq:1.0.0
+    env_file:
+      docker/prod.env
+    ports:
+      - 5672:5672
+
+  app:
+    build: .
+    image: rss_scraper:1.0.0
+    container_name: scraper
+    env_file:
+      docker/prod.env
+    expose:
+      - 5000
+    volumes:
+      - .:/app
+    depends_on:
+      - storage
+      - queue
+
+  nginx:
+    build: docker/nginx
+    image: rss_nginx:1.0.0
+    container_name: nginx
+    ports:
+      - 1338:80
+    depends_on:
+      - app
+
+volumes:
+  stor_vol: {}
