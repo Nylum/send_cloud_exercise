@@ -33,7 +33,7 @@ For each item it also creates unread relationships for each of the user that is 
 
 Users can then request new feed_items, based on the feeds they follow and choose which item to mark as read meaning the deletion of the `Unread` relationship between a specific item and a specific user and create a `Read` relationship.
 
-#Swagger
+## Swagger
 Since that the app is lacking of a GUI the only way to consult and shoot the API collection in an easy way is the provided in `/manager/static/swagger.json` and reachable at the following address `http://localhost:1338/swagger`.
 
 
@@ -64,4 +64,4 @@ While everything is running, shoot `fab launcher` in another terminal window fro
 With the containers running, change `FLASK_ENV` from `development` to `testing` value and shoot `pytest` in order to run the unittests coverage.
 
 ### Environment cleanup
-When you're done using this app use `./scripts/cleanup.sh` to wipe all the created containers, images and volumes.
+When you're done using this app use `./scripts/cleaner.sh` to wipe all the created containers, images and volumes.
